@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import React from "react";
 
 const ArrowDown = React.forwardRef(() => (
   <svg
@@ -38,7 +38,7 @@ export default function Dashboard() {
         </Avatar>
       </div>
       <div
-        className={"flex justify-center items-center flex-col gap-20 min-h-screen"}
+        className={"flex justify-center items-center flex-col gap-32 h-[80vh]"}
       >
         <div className="w-[35rem]">
           <Label htmlFor="todoBox" className={cn("font-bold text-base")}>
@@ -56,38 +56,41 @@ export default function Dashboard() {
             <Button className={cn("w-20 h-8")}>Add</Button>
           </div>
         </div>
-        <div>
-          <div className="bg-white border border-[#343434] ounded-md p-3 rounded-md">
-            <DropdownMenu>
-              <DropdownMenuTrigger className={cn("outline-none")}>
-                <div className="flex justify-between items-center">
-                  <span className="max-w-[30ch] block overflow-hidden text-ellipsis whitespace-nowrap">
-                    Make a backup of your current code to prevent any loss of
-                    work
-                  </span>
-                  <ArrowDown />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className={cn("mt-3 shadow-none rounded-none")}>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Lorem ipsum dolor sit amet consectetur.
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Lorem ipsum dolor sit amet consectetur.
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Lorem ipsum dolor sit amet consectetur.
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Lorem ipsum dolor sit amet consectetur.
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+
+        <div className="flex justify-center items-center flex-wrap gap-10">
+          {[1,2,3,4,5].map(() => (
+            <div className="bg-white border border-[#343434] ounded-md rounded-md p-3">
+              <DropdownMenu>
+                <DropdownMenuTrigger className={cn("outline-none")}>
+                  <div className="flex justify-between items-center w-[20rem]">
+                    <span>TODO APP: Feature Development</span>
+                    <ArrowDown />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className={cn(
+                    "shadow-none border-[#343434] rounded-md mt-5"
+                  )}
+                >
+                  <DropdownMenuItem
+                    className={cn("w-[21rem]")}
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <Checkbox className={cn("mr-2.5")} />
+                    Implement user registration with email and password.
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Checkbox className={cn("mr-2.5")} />
+                    Add user login functionality.
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Checkbox className={cn("mr-2.5")} />
+                    Integrate password reset feature.
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ))}
         </div>
       </div>
     </div>
