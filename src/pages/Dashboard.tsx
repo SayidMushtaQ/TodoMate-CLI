@@ -1,7 +1,12 @@
-import React from 'react'
 
+import { Button } from "@/components/ui/button"
+import {Input} from '@/components/ui/input'
 export default function Dashboard() {
   return (
-    <div>Dashboard</div>
+
+    <div>
+      <Button>Button</Button>
+      <Input/>
+    </div>
   )
 }
