@@ -12,6 +12,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useQuery } from "@tanstack/react-query";
 
 const ArrowDown = React.forwardRef(() => (
   <svg
@@ -28,7 +29,24 @@ const ArrowDown = React.forwardRef(() => (
   </svg>
 ));
 
+const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTVkMWFiOWZmZWUzZWVhNGEyYTQ3YiIsInVzZXJOYW1lIjoic2Fua3UiLCJlbWFpbCI6InNhbmt1ZW50ZXJwcmlzZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJwcm92aWRlciI6IkNyZWRlbnRpYWwiLCJpYXQiOjE3MjIzOTg4OTYsImV4cCI6MTg5NTE5ODg5Nn0.W1hVmKTjpiSUYlaKHZ9K_4I3hyUxZR_yJibFxEvRTlXk1V_wJmb7uX8eLtxwXC1lveuan3VyOqr6y4Yv3Ddd74KefIigGJEMtDi1tfSEqHYMomIgEMGpvO0Sh8JkXakrwmEOprOSPVXZKHp-SDFKAmiq7bmbD4os1ezt-pjhFWQJYsHYaWKEeZK91c3xobzVpGTBZNHLGOVcxlV_FlS1tpV8hYyDoqGMtxh5TBFh5ouKWhAW487l-hL8WmOO7ZejAhd_Ms-b5TL05dwisWIkwV1aSLji0B410S9BUndlWJMIBJCze8otBJokbG3oF3z5-_V8jtZtCb9l8T2NdmSNKA'
 export default function Dashboard() {
+  const { isLoading, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: async ()=>{
+      const res = await fetch("http://localhost:8000/api/v1/todo/todos",{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      const data = await res.json();
+      return data;
+    }
+  });
+  console.log(isLoading);
+  console.log("Todo",data);
   return (
     <div className="container w-full mx-auto">
       <div className="absolute right-20 top-10">
@@ -58,39 +76,35 @@ export default function Dashboard() {
         </div>
 
         <div className="flex justify-center items-center flex-wrap gap-10">
-          {[1,2,3,4,5].map(() => (
-            <div className="bg-white border border-[#343434] ounded-md rounded-md p-3">
-              <DropdownMenu>
-                <DropdownMenuTrigger className={cn("outline-none")}>
-                  <div className="flex justify-between items-center w-[20rem]">
-                    <span>TODO APP: Feature Development</span>
-                    <ArrowDown />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className={cn(
-                    "shadow-none border-[#343434] rounded-md mt-5"
-                  )}
+          <div className="bg-white border border-[#343434] ounded-md rounded-md p-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger className={cn("outline-none")}>
+                <div className="flex justify-between items-center w-[20rem]">
+                  <span>TODO APP: Feature Development</span>
+                  <ArrowDown />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className={cn("shadow-none border-[#343434] rounded-md mt-5")}
+              >
+                <DropdownMenuItem
+                  className={cn("w-[21rem]")}
+                  onSelect={(e) => e.preventDefault()}
                 >
-                  <DropdownMenuItem
-                    className={cn("w-[21rem]")}
-                    onSelect={(e) => e.preventDefault()}
-                  >
-                    <Checkbox className={cn("mr-2.5")} />
-                    Implement user registration with email and password.
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <Checkbox className={cn("mr-2.5")} />
-                    Add user login functionality.
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <Checkbox className={cn("mr-2.5")} />
-                    Integrate password reset feature.
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          ))}
+                  <Checkbox className={cn("mr-2.5")} />
+                  Implement user registration with email and password.
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  <Checkbox className={cn("mr-2.5")} />
+                  Add user login functionality.
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  <Checkbox className={cn("mr-2.5")} />
+                  Integrate password reset feature.
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </div>
