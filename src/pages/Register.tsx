@@ -11,38 +11,17 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-const formSchema = z
-  .object({
-    userName: z.string().min(5, {
-      message: "Username must be at least 5 characters.",
-    }),
-    fullName: z.string().min(3, {
-      message: "Full name must be at least 3 characters.",
-    }),
-    phone: z.string().min(10, {
-      message: "Phone must be at least 10 characters.",
-    }),
-    email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
-    }),
-    confirmPassword: z.string(),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: "custom",
-        message: "The passwords did not match",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+import { userShema, userShemaTypes } from "@/schemas/userRegisterShema";
+
+import { redirect } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+
 export default function Register() {
- const {mutate} = useMutation({
-    mutationFn: async (values: z.infer<typeof formSchema>) => {
-      console.log(values)
+  const { toast } = useToast();
+  const { mutate } = useMutation({
+    mutationFn: async (values: userShemaTypes) => {
       return fetch(`/api/users/register`, {
         method: "POST",
         headers: {
@@ -52,8 +31,9 @@ export default function Register() {
       });
     },
   });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+
+  const form = useForm<userShemaTypes>({
+    resolver: zodResolver(userShema),
     defaultValues: {
       userName: "",
       fullName: "",
@@ -67,7 +47,7 @@ export default function Register() {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(values=> mutate(values))}>
+          <form onSubmit={form.handleSubmit((values) => mutate(values))}>
             <FormField
               control={form.control}
               name="userName"
