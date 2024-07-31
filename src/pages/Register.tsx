@@ -40,10 +40,10 @@ const formSchema = z
     }
   });
 export default function Register() {
- const mutation = useMutation({
+ const {mutate} = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) => {
       console.log(values)
-      return fetch("/api", {
+      return fetch(`/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,12 +63,11 @@ export default function Register() {
       confirmPassword: "",
     },
   });
-  
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(values=> mutation.mutate(values))}>
+          <form onSubmit={form.handleSubmit(values=> mutate(values))}>
             <FormField
               control={form.control}
               name="userName"
