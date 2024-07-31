@@ -97,7 +97,15 @@ export default function Register() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className={cn("mt-5")}>
+            <div className="flex items-center justify-center gap-5 mt-4">
+              <button className="flex items-center px-4 py-1 border border-[#343434] rounded">
+                Login with Google
+              </button>
+              <button className="flex items-center px-4 py-1 border border-[#343434] rounded">
+                Login with GitHub
+              </button>
+            </div>
+            <Button type="submit" className={cn("mt-5 h-8")}>
               Submit
             </Button>
           </form>

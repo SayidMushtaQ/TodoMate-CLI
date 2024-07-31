@@ -14,7 +14,7 @@ export default function Login() {
   const form = useForm();
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-[20rem] border border-[#343434] p-5 rounded-md shadow-md">
+      <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
         <Form {...form}>
           <form>
             <FormField
@@ -43,7 +43,17 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className={cn('mt-5')}>Submit</Button>
+            <div className="flex items-center justify-center gap-3 mt-5">
+              <button className="flex items-center px-4 py-1 border border-[#343434] rounded">
+                Login with Google
+              </button>
+              <button className="flex items-center px-4 py-1 border border-[#343434] rounded">
+                Login with GitHub
+              </button>
+            </div>
+            <Button type="submit" className={cn("mt-5 h-8")}>
+              Submit
+            </Button>
           </form>
         </Form>
       </div>
