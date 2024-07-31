@@ -14,13 +14,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { userShema, userShemaTypes } from "@/schemas/userRegisterShema";
 
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { useEffect } from "react";
 
 export default function Register() {
   const { toast } = useToast();
-  const { mutate } = useMutation({
+  const navigate = useNavigate();
+  const { mutate, isSuccess, data } = useMutation({
     mutationFn: async (values: userShemaTypes) => {
       return fetch(`/api/users/register`, {
         method: "POST",
@@ -31,7 +33,6 @@ export default function Register() {
       });
     },
   });
-
   const form = useForm<userShemaTypes>({
     resolver: zodResolver(userShema),
     defaultValues: {
@@ -43,6 +44,20 @@ export default function Register() {
       confirmPassword: "",
     },
   });
+  useEffect(() => {
+    if (data && !data.ok && data.status === 409) {
+      toast({
+        title: "User already exists",
+        description:
+          "When a registration attempt is made and the username already exist.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        variant: "destructive",
+      });
+    }
+    if (isSuccess && data.ok) {
+      navigate("/login");
+    }
+  }, [data, toast, isSuccess, navigate]);
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
