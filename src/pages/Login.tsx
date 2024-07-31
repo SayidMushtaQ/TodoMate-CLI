@@ -10,17 +10,36 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {loginSchema,loginSchemaTypes} from '@/schemas/userSchema'
 export default function Login() {
-  const form = useForm();
-
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      userInput: "",
+      password: "",
+    },
+  });
+  const { mutate } = useMutation({
+    mutationFn: async (values: loginSchemaTypes) => {
+      return fetch(`/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+    },
+  });
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(values=>mutate(values))}>
             <FormField
               control={form.control}
-              name="userName"
+              name="userInput"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>User Name or Email</FormLabel>
@@ -33,7 +52,7 @@ export default function Login() {
             />
             <FormField
               control={form.control}
-              name="userName"
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>

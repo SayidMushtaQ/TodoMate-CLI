@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { userShema, userShemaTypes } from "@/schemas/userRegisterShema";
+import { registerShema, registerShemaTypes } from "@/schemas/userSchema";
 
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -23,7 +23,7 @@ export default function Register() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { mutate, isSuccess, data } = useMutation({
-    mutationFn: async (values: userShemaTypes) => {
+    mutationFn: async (values: registerShemaTypes) => {
       return fetch(`/api/users/register`, {
         method: "POST",
         headers: {
@@ -33,8 +33,8 @@ export default function Register() {
       });
     },
   });
-  const form = useForm<userShemaTypes>({
-    resolver: zodResolver(userShema),
+  const form = useForm<registerShemaTypes>({
+    resolver: zodResolver(registerShema),
     defaultValues: {
       userName: "",
       fullName: "",

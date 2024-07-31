@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const userShema = z
+export const registerShema = z
   .object({
     userName: z.string().min(5, {
       message: "Username must be at least 5 characters.",
@@ -25,5 +25,16 @@ export const userShema = z
       });
     }
   });
+const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/; 
+export const loginSchema = z.object({
+  userInput: z.union([
+    z.string().email("Invalid user email"),
+    z.string().regex(usernameRegex,'Invalid user username')
+  ]),
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
+  })
+})
 
-export type userShemaTypes = z.infer<typeof userShema>
+export type registerShemaTypes = z.infer<typeof registerShema>
+export type loginSchemaTypes = z.infer<typeof loginSchema>
