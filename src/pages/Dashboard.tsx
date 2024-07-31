@@ -12,9 +12,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { useQuery } from "@tanstack/react-query";
 
-const ArrowDown = React.forwardRef(() => (
+const ArrowDown = () => (
   <svg
     width="20"
     height="20"
@@ -27,26 +26,11 @@ const ArrowDown = React.forwardRef(() => (
       fill="black"
     />
   </svg>
-));
+);
 
-const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTVkMWFiOWZmZWUzZWVhNGEyYTQ3YiIsInVzZXJOYW1lIjoic2Fua3UiLCJlbWFpbCI6InNhbmt1ZW50ZXJwcmlzZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJwcm92aWRlciI6IkNyZWRlbnRpYWwiLCJpYXQiOjE3MjIzOTg4OTYsImV4cCI6MTg5NTE5ODg5Nn0.W1hVmKTjpiSUYlaKHZ9K_4I3hyUxZR_yJibFxEvRTlXk1V_wJmb7uX8eLtxwXC1lveuan3VyOqr6y4Yv3Ddd74KefIigGJEMtDi1tfSEqHYMomIgEMGpvO0Sh8JkXakrwmEOprOSPVXZKHp-SDFKAmiq7bmbD4os1ezt-pjhFWQJYsHYaWKEeZK91c3xobzVpGTBZNHLGOVcxlV_FlS1tpV8hYyDoqGMtxh5TBFh5ouKWhAW487l-hL8WmOO7ZejAhd_Ms-b5TL05dwisWIkwV1aSLji0B410S9BUndlWJMIBJCze8otBJokbG3oF3z5-_V8jtZtCb9l8T2NdmSNKA'
 export default function Dashboard() {
-  const { isLoading, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: async ()=>{
-      const res = await fetch("http://localhost:8000/api/v1/todo/todos",{
-        method:'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      const data = await res.json();
-      return data;
-    }
-  });
-  console.log(isLoading);
-  console.log("Todo",data);
+ 
+
   return (
     <div className="container w-full mx-auto">
       <div className="absolute right-20 top-10">
