@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 export default function Login() {
   const form = useForm();
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">

@@ -10,13 +10,54 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+const formSchema = z
+  .object({
+    userName: z.string().min(5, {
+      message: "Username must be at least 5 characters.",
+    }),
+    fullName: z.string().min(3, {
+      message: "Full name must be at least 3 characters.",
+    }),
+    phone: z.string().min(10, {
+      message: "Phone must be at least 10 characters.",
+    }),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(6, {
+      message: "Password must be at least 6 characters.",
+    }),
+    confirmPassword: z.string(),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+        path: ["confirmPassword"],
+      });
+    }
+  });
 export default function Register() {
-  const form = useForm();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      userName: "",
+      fullName: "",
+      phone: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+  };
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="userName"
