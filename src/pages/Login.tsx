@@ -16,8 +16,10 @@ import { loginSchema, loginSchemaTypes } from "@/schemas/userSchema";
 import { useEffect } from "react";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import {useNavigate} from 'react-router-dom'
 export default function Login() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -46,7 +48,10 @@ export default function Login() {
         variant: "destructive",
       });
     }
-  }, [data, toast, isSuccess]);
+    if(isSuccess){
+      navigate('/')
+    }
+  }, [data, toast, isSuccess,navigate]);
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
