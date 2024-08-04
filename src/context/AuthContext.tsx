@@ -1,15 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import Cookie from "js-cookie";
-export interface AuthContextProps {
-  user: User | null;
-  loading:boolean
-}
-interface User {
-  userName: string;
-  email: string;
-}
 
-export const AuthContext = createContext<AuthContextProps | undefined>(
+
+const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
 );
 
@@ -44,4 +37,4 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export { AuthProvider };
+export { AuthProvider,AuthContext };
