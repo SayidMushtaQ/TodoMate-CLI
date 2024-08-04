@@ -1,40 +1,38 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import Cookie from "js-cookie";
 
-
-const AuthContext = createContext<AuthContextProps | undefined>(
-  undefined
-);
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const token = Cookie.get("accessToken");
     if (token) {
-      fetch("/api/users/user", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then(({ data }) => {
-          setUser(data.user);
+      (async () => {
+        try {
+          const res = await fetch("/api/users/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+          const {data} = await res.json();
+          setUser(data.user)
           setLoading(false);
-        })
-        .catch(() => {
-          setUser(null);
+        } catch (err) {
+          console.error(err);
           setLoading(false)
-        });
+        }
+      })();
     }
   }, []);
   return (
-    <AuthContext.Provider value={{ user,loading }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthProvider,AuthContext };
+export { AuthProvider, AuthContext };
