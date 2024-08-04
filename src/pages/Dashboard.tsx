@@ -11,7 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem, 
 } from "@/components/ui/dropdown-menu";
-import { UseAuth } from "@/context/AuthContext";
 const ArrowDown = () => (
   <svg
     width="20"
@@ -28,8 +27,6 @@ const ArrowDown = () => (
 );
 
 export default function Dashboard() {
-  const { user } = UseAuth()
-  console.log(user)
   return (
     <div className="container w-full mx-auto">
       <div className="absolute right-20 top-10">

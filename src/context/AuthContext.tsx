@@ -1,23 +1,21 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import Cookie from "js-cookie";
-interface AuthContextProps {
+export interface AuthContextProps {
   user: User | null;
+  loading:boolean
 }
 interface User {
   userName: string;
   email: string;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading,setLoading] = useState(true);
   useEffect(() => {
     const token = Cookie.get("accessToken");
     if (token) {
@@ -31,26 +29,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         .then((res) => res.json())
         .then(({ data }) => {
           setUser(data.user);
-          localStorage.setItem('userEmail',data.user.email)
+          setLoading(false);
         })
-        .catch(() =>{
-          setUser(null)
-          localStorage.removeItem('userEmail')
-        } 
-      );
+        .catch(() => {
+          setUser(null);
+          setLoading(false)
+        });
     }
-    
   }, []);
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user,loading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
-const UseAuth = (): AuthContextProps => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
 
-export { AuthProvider, UseAuth };
+export { AuthProvider };

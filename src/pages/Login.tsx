@@ -16,7 +16,8 @@ import { loginSchema, loginSchemaTypes } from "@/schemas/userSchema";
 import { useEffect } from "react";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -48,10 +49,10 @@ export default function Login() {
         variant: "destructive",
       });
     }
-    if(isSuccess){
-      navigate('/')
+    if (isSuccess) {
+      navigate("/");
     }
-  }, [data, toast, isSuccess,navigate]);
+  }, [data, toast, isSuccess, navigate]);
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[25rem] border border-[#343434] p-5 rounded-md shadow-md">
