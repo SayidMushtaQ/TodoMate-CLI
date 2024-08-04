@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem, 
 } from "@/components/ui/dropdown-menu";
-import { AuthContext,AuthContextProps } from "@/context/AuthContext";
+import { UseAuth } from "@/context/AuthContext";
 const ArrowDown = () => (
   <svg
     width="20"
@@ -29,7 +28,7 @@ const ArrowDown = () => (
 );
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext) as AuthContextProps;
+  const { user } = UseAuth()
   console.log(user)
   return (
     <div className="container w-full mx-auto">

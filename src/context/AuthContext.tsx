@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Cookie from "js-cookie";
 interface AuthContextProps {
   user: User | null;
@@ -12,9 +18,8 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const token = Cookie.get("accessToken");
   useEffect(() => {
-    console.log(token);
+    const token = Cookie.get("accessToken");
     if (token) {
       fetch("/api/users/user", {
         method: "GET",
@@ -24,13 +29,24 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
       })
         .then((res) => res.json())
-        .then((data)=>setUser(data))
+        .then(({ data }) => {
+          setUser(data.user)
+          console.log(data.user.email)
+          localStorage.setItem('useEmail',data.user.email)
+        })
         .catch(() => setUser(null));
     }
-  }, [token]);
+  }, []);
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
-export { AuthContext, AuthProvider };
-export type { AuthContextProps };
+const UseAuth = (): AuthContextProps => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+export { AuthProvider, UseAuth };
