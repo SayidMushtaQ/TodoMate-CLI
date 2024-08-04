@@ -30,12 +30,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       })
         .then((res) => res.json())
         .then(({ data }) => {
-          setUser(data.user)
-          console.log(data.user.email)
-          localStorage.setItem('useEmail',data.user.email)
+          setUser(data.user);
+          localStorage.setItem('userEmail',data.user.email)
         })
-        .catch(() => setUser(null));
+        .catch(() =>{
+          setUser(null)
+          localStorage.removeItem('userEmail')
+        } 
+      );
     }
+    
   }, []);
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
