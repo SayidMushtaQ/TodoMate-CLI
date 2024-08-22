@@ -9,7 +9,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem, 
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 const ArrowDown = () => (
   <svg
@@ -55,36 +55,38 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center flex-wrap gap-10">
-          <div className="bg-white border border-[#343434] ounded-md rounded-md p-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger className={cn("outline-none")}>
-                <div className="flex justify-between items-center w-[20rem]">
-                  <span>TODO APP: Feature Development</span>
-                  <ArrowDown />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className={cn("shadow-none border-[#343434] rounded-md mt-5")}
-              >
-                <DropdownMenuItem
-                  className={cn("w-[21rem]")}
-                  onSelect={(e) => e.preventDefault()}
+        <div className="flex justify-start items-center flex-wrap gap-10  w-[85%]">
+          {Array(8).fill(0).map(() => (
+            <div className="bg-white border border-[#343434] ounded-md rounded-md p-3">
+              <DropdownMenu>
+                <DropdownMenuTrigger className={cn("outline-none")}>
+                  <div className="flex justify-between items-center w-[20rem]">
+                    <span>TODO APP: Feature Development</span>
+                    <ArrowDown />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className={cn("shadow-none border-[#343434] rounded-md mt-5")}
                 >
-                  <Checkbox className={cn("mr-2.5")} />
-                  Implement user registration with email and password.
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Add user login functionality.
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <Checkbox className={cn("mr-2.5")} />
-                  Integrate password reset feature.
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+                  <DropdownMenuItem
+                    className={cn("w-[21rem]")}
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <Checkbox className={cn("mr-2.5")} />
+                    Implement user registration with email and password.
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Checkbox className={cn("mr-2.5")} />
+                    Add user login functionality.
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Checkbox className={cn("mr-2.5")} />
+                    Integrate password reset feature.
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ))}
         </div>
       </div>
     </div>
