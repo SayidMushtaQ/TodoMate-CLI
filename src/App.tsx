@@ -6,13 +6,13 @@ import AuthenticatUser from "@/middleware/authenticateUser";
 function App() {
   return (
     <BrowserRouter>
-      <AuthenticatUser>
-        <Routes>
+      <Routes>
+        <Route element={<AuthenticatUser />}>
           <Route index element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </AuthenticatUser>
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </BrowserRouter>
   );
 }

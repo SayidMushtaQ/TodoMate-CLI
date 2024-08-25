@@ -8,6 +8,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const token = Cookie.get("accessToken");
+
     if (token) {
       (async () => {
         try {
@@ -26,6 +27,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           setLoading(false)
         }
       })();
+    }else{
+      setLoading(false)
     }
   }, []);
   return (
