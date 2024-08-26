@@ -1,6 +1,7 @@
 import UserInputBox from './components/userInputBox.component'
 import './App.css'
 import Navigation from './components/Navigation.component'
+import Todos from './components/Todos.component'
 function App() {
 
   return (
@@ -10,6 +11,9 @@ function App() {
       </div>
       <div className='navigation'>
         <Navigation/>
+      </div>
+      <div className='todos-box'>
+        <Todos/>
       </div>
     </div>
   )
