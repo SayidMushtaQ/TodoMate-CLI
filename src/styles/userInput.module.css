@@ -1,0 +1,48 @@
+.userInputBox{
+    width: 40rem;
+    background-color: var(--primary-background);
+    padding: var(--box-padding);
+    margin: var(--box-margin);
+    border-radius: var(--box-border-radius);
+}
+
+.userInputsSubBox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: self-start;
+    flex-direction: column;
+    gap: 20px;
+}
+.userInputFormBox{
+    align-self: stretch;
+    margin-bottom: 0.8rem;
+}
+.userInputsHeading > h1{
+    margin-bottom: 0.4rem;
+    color: var( --primary-txt);
+}
+.userInputsHeading > p {
+    color: var( --secondary-txt);
+}
+.userInputsHeading > p b{
+    color: var(--primary-txt);
+}
+.userInputFormBox > form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.userInputFormBox > form > input[type='text']{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.userInputFormBox > form > button{
+    align-self: self-start;
+    padding: var(--button-padding);
+    border-radius: 5px;
+    cursor: pointer;
+}

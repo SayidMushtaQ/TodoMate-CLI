@@ -6,9 +6,13 @@
   --secondary-background:#E0E0E0;
   --primary-txt:#000000;
   --secondary-txt:#757575;
-  --box-padding:8px 10px;
+  --border-dark:#000000;
+  --box-padding:8px 16px;
   --box-margin:10px;
-  --box-radious:15px;
+  --box-border-radius:7px;
+  --primary-button:#000000;
+  --secondary-button:#1a1919;
+  --button-padding:9px 20px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,4 +29,18 @@ body{
   width: 100%;
   background-color: var(--secondary-background);
   color: var(--primary-txt);
+}
+
+input{
+  outline: none;
+  border: none;
+}
+
+button{
+  background-color: var(--primary-button);
+  color: white;
+  border: none;
+}
+button:hover{
+  background-color: var(--secondary-button);
 }
