@@ -1,9 +1,8 @@
 .container{
     width: 80%;
-    height: calc(100dvh  - 50px);
+    height: 100dvh;
     margin: 0px auto;
     padding: 20px;
-    border: 2px solid red;
 }
 .todo-box{
     width: 100%;
@@ -15,4 +14,12 @@
 
 .navigation{
     margin: 2rem 0px;
+}
+
+.todos-box{
+    width: 100%;
+    height: calc(50vh - 20px);
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
