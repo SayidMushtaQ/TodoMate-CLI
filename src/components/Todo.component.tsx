@@ -12,14 +12,14 @@ export default function Todo() {
           <input type="checkbox" name="option1" value="Option 1" />
           <span> Lorem, ipsum dolor.</span>
         </label>
-        <label>
+        {/* <label>
           <input type="checkbox" name="option1" value="Option 1" />
           <span> Lorem, ipsum dolor.</span>
         </label>
         <label>
           <input type="checkbox" name="option1" value="Option 1" />
           <span> Lorem, ipsum dolor.</span>
-        </label>
+        </label> */}
       </div>
     </div>
   );
