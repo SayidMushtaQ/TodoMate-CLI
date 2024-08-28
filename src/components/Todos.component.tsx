@@ -10,7 +10,6 @@ export default function Todos() {
       <Todo/>
       <Todo/>
       <Todo/>
-
     </div>
   )
 }
