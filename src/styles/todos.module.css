@@ -1,11 +1,11 @@
 .todos{
     width: 100%;
     display: grid;
-    height: inherit;
     gap: 20px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    place-content: start;
-    place-items: center;
+    place-content: center;
+    justify-items: center;
+    align-items: start;
 }
 
 .todo{
@@ -25,6 +25,13 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    max-height:20px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+    transition-timing-function: ease-in-out;
+}
+.openTodos{
+    max-height: 280px;
 }
 .subTodos > label{
     display: flex;
@@ -49,8 +56,12 @@
     bottom: 0px;
     backdrop-filter: blur(0.8px);
     border-radius: 0px 0px 7px 7px;
+    cursor: pointer;
 }
 .todoBottomBlur > svg{
     margin-bottom: 20px;
     filter: blur(0.8px);
+}
+.todoBottomBlur:hover > svg{
+    filter: blur(0px);
 }
