@@ -13,12 +13,13 @@
     background-color: var( --primary-background);
     padding: var(--box-padding);
     border-radius: var( --box-border-radius);
+    position: relative;
 }
 .todo > span{
     font-size: 1.2rem;
     font-weight: 500;
     display: block;
-    margin-bottom: 10px;
+    margin: 10px 0px;
 }
 .subTodos{
     display: flex;
@@ -34,4 +35,14 @@
 .subTodos > label span{
     color: var(--secondary-txt);
     font-weight: 400;
+}
+
+.todoBottomBlur{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 70%;
+    bottom: 0px;
+    backdrop-filter: blur(0.8px);
+    border-radius: 0px 0px 7px 7px;
 }
