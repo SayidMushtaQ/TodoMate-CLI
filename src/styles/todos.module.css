@@ -40,9 +40,17 @@
 .todoBottomBlur{
     width: 100%;
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-inline: 10px;
     left: 0;
     top: 70%;
     bottom: 0px;
     backdrop-filter: blur(0.8px);
     border-radius: 0px 0px 7px 7px;
+}
+.todoBottomBlur > svg{
+    margin-bottom: 20px;
+    filter: blur(0.8px);
 }

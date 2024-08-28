@@ -1,4 +1,6 @@
 import style from "../styles/todos.module.css";
+import { FaCircleArrowDown } from "react-icons/fa6";
+
 export default function Todo() {
   return (
     <div className={style.todo}>
@@ -9,7 +11,9 @@ export default function Todo() {
           <span> Lorem, ipsum dolor. </span>
         </label>
       </div>
-      <div className={style.todoBottomBlur}/>
+      <div className={style.todoBottomBlur}>
+        <FaCircleArrowDown size={22} color="4c4a4a"/>
+      </div>
     </div>
   );
 }
