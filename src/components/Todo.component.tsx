@@ -30,7 +30,7 @@ export default function Todo() {
           <span> Lorem, ipsum dolor. </span>
         </label>
       </div>
-      <div onClick={()=>setToggle(!toggle)} className={clsx({[style.todoBottomOnBlur]: !toggle})}>
+      <div onClick={()=>setToggle(!toggle)} className={clsx(style.todoBottomDefault,{[style.todoBottomOnBlur]: !toggle})}>
         <FaCircleArrowDown size={22} color="4c4a4a" className={clsx(style.bottomBlurAction,{[style.blurActionToggle]:toggle})} aria-label="Card drop down"/>
       </div>
     </div>

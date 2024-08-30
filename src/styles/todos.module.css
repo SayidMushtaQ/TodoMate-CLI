@@ -44,17 +44,19 @@
     color: var(--secondary-txt);
     font-weight: 400;
 }
-
+.todoBottomDefault{
+    width: 100%;
+}
 .todoBottomOnBlur{
+    transition:  backdrop-filter 0.3s;  
+    backdrop-filter: blur(0.8px);
+    border-radius: 0px 0px 7px 7px;
     width: 100%;
     position: absolute;
     left: 0;
     top: 70%;
     bottom: 0px;
-    backdrop-filter: blur(0.8px);
-    border-radius: 0px 0px 7px 7px;
     cursor: pointer;
-    transition:  backdrop-filter 0.3s;
 }
 
 .bottomBlurAction{
