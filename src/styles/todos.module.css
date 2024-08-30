@@ -4,9 +4,7 @@
     gap: 20px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     place-content: center;
-    justify-items: center;
-    align-items: start;
-
+    place-items: center;
 }
 
 .todo{
