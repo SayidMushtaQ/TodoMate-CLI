@@ -1,6 +1,6 @@
 .navigationBox{
     background-color: var(--primary-background);
-    padding: var(--box-padding);
+    padding: 12px;
     border-radius: calc(var( --box-border-radius) - 3px);
 }
 .navigationBox > span{
