@@ -4,6 +4,7 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import clsx from 'clsx'
 export default function Todo() {
   const [toggle,setToggle] = useState(false);
+  console.log(toggle)
   return (
     <div className={style.todo}>
       <span>Add project details</span>
@@ -29,8 +30,8 @@ export default function Todo() {
           <span> Lorem, ipsum dolor. </span>
         </label>
       </div>
-      <div onClick={()=>setToggle(!toggle)} className={style.todoBottomBlur}>
-        <FaCircleArrowDown size={22} color="4c4a4a"/>
+      <div onClick={()=>setToggle(!toggle)} className={clsx({[style.todoBottomOnBlur]: !toggle})}>
+        <FaCircleArrowDown size={22} color="4c4a4a" className={clsx(style.bottomBlurAction,{[style.blurActionToggle]:toggle})} aria-label="Card drop down"/>
       </div>
     </div>
   );

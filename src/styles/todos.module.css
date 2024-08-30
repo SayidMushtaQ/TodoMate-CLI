@@ -45,24 +45,27 @@
     font-weight: 400;
 }
 
-.todoBottomBlur{
+.todoBottomOnBlur{
     width: 100%;
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-inline: 10px;
     left: 0;
     top: 70%;
     bottom: 0px;
     backdrop-filter: blur(0.8px);
     border-radius: 0px 0px 7px 7px;
     cursor: pointer;
+    transition:  backdrop-filter 0.3s;
 }
-.todoBottomBlur > svg{
-    margin-bottom: 20px;
+
+.bottomBlurAction{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
     filter: blur(0.8px);
+    transition: transform 0.3s;
+    cursor: pointer;
 }
-.todoBottomBlur:hover > svg{
+.blurActionToggle{
     filter: blur(0px);
+    transform: rotate(180deg);
 }
