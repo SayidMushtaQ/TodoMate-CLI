@@ -1,21 +1,11 @@
-import UserInputBox from './components/userInputBox.component'
 import './App.css'
-import Navigation from './components/Navigation.component'
-import Todos from './components/Todos.component'
+import {Routes,Route} from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
 function App() {
-
   return (
-    <div className='container'>
-      <div className='todo-box'>
-        <UserInputBox/>
-      </div>
-      <div className='navigation'>
-        <Navigation/>
-      </div>
-      <div className='todos-box'>
-        <Todos/>
-      </div>
-    </div>
+    <Routes>
+      <Route index element={ <Dashboard/>}/>
+    </Routes>
   )
 }
 
