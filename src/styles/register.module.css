@@ -103,3 +103,22 @@
 .googleButton:hover{
   background-color: rgb(240, 240, 240);
 }
+.alreadyHaveAccount {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alreadyHaveAccount p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.loginLink {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.loginLink:hover {
+  text-decoration: underline;
+}

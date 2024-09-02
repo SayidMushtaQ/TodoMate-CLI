@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styles from "../styles/register.module.css";
+import { Link } from "react-router-dom";
 
 interface FormData {
   username: string;
@@ -118,6 +119,11 @@ const Register: React.FC = () => {
           >
             Register with Google
           </button>
+        </div>
+        <div className={styles.alreadyHaveAccount}>
+          <p>
+            Already have an account? <Link to="/login" className={styles.loginLink}>Login</Link>
+          </p>
         </div>
       </form>
     </div>
