@@ -1,22 +1,29 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styles from "../styles/register.module.css";
 import { Link } from "react-router-dom";
-
-interface FormData {
-  username: string;
-  fullname: string;
-  email: string;
-  password: string;
-  phone: string;
-}
-
+import { useMutation } from "@tanstack/react-query";
+import { registerNewUserHandler } from "../helpers/userApi.helper";
+import {useNavigate} from 'react-router-dom'
+import type {FormData,ApiError} from '../types/register'
+import type {AxiosResponse} from 'axios'
+import {toast} from 'react-toastify'
 const Register: React.FC = () => {
+  const nvaigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
-    username: "",
+    userName: "",
     fullname: "",
     email: "",
     password: "",
     phone: "",
+  });
+  const { mutate: registerNewUser,data,error} = useMutation<AxiosResponse<any>,ApiError,FormData>({
+    mutationFn: registerNewUserHandler,
+    onError: (err) => {
+      console.error("User register ERROR: ", err);
+    },
+    onSuccess:()=>{
+      return nvaigate('/login')
+    }
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,30 +32,40 @@ const Register: React.FC = () => {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission logic here
+    registerNewUser(formData)
   };
   const handleGoogleRegister = () => {
     // Handle Google OAuth here
     console.log("Register with Google");
     // Example: window.location.href = "YOUR_GOOGLE_AUTH_URL";
   };
+  if(error && error.status == 409){
+    toast('User already Exist!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   return (
     <div className={styles.registerContainer}>
       <form className={styles.registerForm} onSubmit={handleSubmit}>
         <h2 className={styles.heading}>Register</h2>
         <div className={styles.flexContainer}>
           <div className={styles.formGroup}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="userName">userName:</label>
             <input
               type="text"
-              id="username"
-              name="username"
-              placeholder="Enter a username"
-              value={formData.username}
+              id="userName"
+              name="userName"
+              placeholder="Enter a userName"
+              value={formData.userName}
               onChange={handleChange}
               required
             />
@@ -122,7 +139,10 @@ const Register: React.FC = () => {
         </div>
         <div className={styles.alreadyHaveAccount}>
           <p>
-            Already have an account? <Link to="/login" className={styles.loginLink}>Login</Link>
+            Already have an account?{" "}
+            <Link to="/login" className={styles.loginLink}>
+              Login
+            </Link>
           </p>
         </div>
       </form>
