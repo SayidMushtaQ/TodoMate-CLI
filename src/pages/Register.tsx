@@ -22,6 +22,16 @@ const Register: React.FC = () => {
       console.error("User register ERROR: ", err);
     },
     onSuccess:()=>{
+      toast.success('User Register Successfully🥳🎉', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       return nvaigate('/login')
     }
   });
@@ -42,8 +52,8 @@ const Register: React.FC = () => {
   };
   useEffect(()=>{
     if(error && error.status == 409){
-      toast('User already Exist!', {
-        position: "top-right",
+      toast.error('User already exists 🧑🏼‍🎓!', {
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
