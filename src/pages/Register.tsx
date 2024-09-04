@@ -1,39 +1,31 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import styles from "../styles/register.module.css";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { registerNewUserHandler } from "../helpers/userApi.helper";
-import {useNavigate} from 'react-router-dom'
-import type {FormData,ApiError,UserRes} from '../types/register'
-import type {AxiosResponse} from 'axios'
-import {toast} from 'react-toastify'
+import { useNavigate } from "react-router-dom";
+import {SuccessPopUp,ErrorPopUP} from '../util/resPopUp'
+import type { RegisterUser, ApiError, RegisterRes } from "../types/user";
+import type { AxiosResponse } from "axios";
 const Register: React.FC = () => {
   const nvaigate = useNavigate();
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<RegisterUser>({
     userName: "",
     fullname: "",
     email: "",
     password: "",
     phone: "",
   });
-  const { mutate: registerNewUser,error} = useMutation<AxiosResponse<UserRes>,ApiError,FormData>({
+  const { mutate: registerNewUser } = useMutation<AxiosResponse<RegisterRes>,ApiError,RegisterUser>({
     mutationFn: registerNewUserHandler,
+    onSuccess: () => {
+      SuccessPopUp("User register Successfully 🥳🎉")
+      return nvaigate("/login");
+    },
     onError: (err) => {
+      if (err.status == 409) ErrorPopUP("User already exist, Please LOGIN")
       console.error("User register ERROR: ", err);
     },
-    onSuccess:()=>{
-      toast.success('User Register Successfully🥳🎉', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      return nvaigate('/login')
-    }
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -43,27 +35,13 @@ const Register: React.FC = () => {
   };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    registerNewUser(formData)
+    registerNewUser(formData);
   };
   const handleGoogleRegister = () => {
     // Handle Google OAuth here
     console.log("Register with Google");
     // Example: window.location.href = "YOUR_GOOGLE_AUTH_URL";
   };
-  useEffect(()=>{
-    if(error && error.status == 409){
-      toast.error('User already exists 🧑🏼‍🎓!', {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  },[error])
   return (
     <div className={styles.registerContainer}>
       <form className={styles.registerForm} onSubmit={handleSubmit}>

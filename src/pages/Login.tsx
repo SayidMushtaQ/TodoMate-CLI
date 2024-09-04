@@ -1,13 +1,29 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styles from "../styles/login.module.css";
 import { Link } from "react-router-dom";
-
+import { useMutation } from "@tanstack/react-query";
+import { ApiError, LoginUser, UserRes } from "../types/user";
+import { loginUserHanlder } from "../helpers/userApi.helper";
+import { AxiosResponse } from "axios";
+import {useNavigate} from 'react-router-dom'
+import { ErrorPopUP,SuccessPopUp } from "../util/resPopUp";
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<LoginUser>({
     userInput: "",
     password: "",
   });
-
+  const { mutate } = useMutation<AxiosResponse<UserRes>,ApiError,LoginUser>({
+    mutationFn: loginUserHanlder,
+    onSuccess: () => {
+      SuccessPopUp("User log-in successfully 🥳🎉")
+      return navigate('/');
+    },
+    onError: (err) => {
+      if(err.status == 404) ErrorPopUP("User does not found !! 😶")
+      console.error("User login ERROR: ", err);
+    },
+  });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -17,8 +33,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission logic here
+    mutate(formData);
   };
 
   const handleGoogleLogin = () => {
@@ -26,7 +41,6 @@ const Login: React.FC = () => {
     console.log("Login with Google");
     // Example: window.location.href = "YOUR_GOOGLE_AUTH_URL";
   };
-
   return (
     <div className={styles.loginContainer}>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -77,7 +91,10 @@ const Login: React.FC = () => {
         </div>
         <div className={styles.dontHaveAccount}>
           <p>
-            Don&apos;t have an account? <Link to="/register" className={styles.registerLink}>Register</Link>
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className={styles.registerLink}>
+              Register
+            </Link>
           </p>
         </div>
       </form>
