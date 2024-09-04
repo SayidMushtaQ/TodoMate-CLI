@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import styles from "../styles/register.module.css";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { registerNewUserHandler } from "../helpers/userApi.helper";
 import {useNavigate} from 'react-router-dom'
-import type {FormData,ApiError} from '../types/register'
+import type {FormData,ApiError,UserRes} from '../types/register'
 import type {AxiosResponse} from 'axios'
 import {toast} from 'react-toastify'
 const Register: React.FC = () => {
@@ -16,7 +16,7 @@ const Register: React.FC = () => {
     password: "",
     phone: "",
   });
-  const { mutate: registerNewUser,data,error} = useMutation<AxiosResponse<any>,ApiError,FormData>({
+  const { mutate: registerNewUser,error} = useMutation<AxiosResponse<UserRes>,ApiError,FormData>({
     mutationFn: registerNewUserHandler,
     onError: (err) => {
       console.error("User register ERROR: ", err);
@@ -25,7 +25,6 @@ const Register: React.FC = () => {
       return nvaigate('/login')
     }
   });
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -41,18 +40,20 @@ const Register: React.FC = () => {
     console.log("Register with Google");
     // Example: window.location.href = "YOUR_GOOGLE_AUTH_URL";
   };
-  if(error && error.status == 409){
-    toast('User already Exist!', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  }
+  useEffect(()=>{
+    if(error && error.status == 409){
+      toast('User already Exist!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  },[error])
   return (
     <div className={styles.registerContainer}>
       <form className={styles.registerForm} onSubmit={handleSubmit}>
