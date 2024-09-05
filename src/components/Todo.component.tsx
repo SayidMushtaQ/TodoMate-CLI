@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../styles/todos.module.css";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import clsx from 'clsx'
+import axios from "axios";
 export default function Todo() {
   const [toggle,setToggle] = useState(false);
-  console.log(toggle)
+  useEffect(()=>{
+     const fetchTodos = async()=>{
+      try{
+        const todos = await axios.get('/api/todo/todos',{withCredentials:true});
+        console.log(todos)
+      }catch(err){
+        console.log(err);
+      }
+     }
+     fetchTodos()
+  },[])
   return (
     <div className={style.todo}>
       <span>Add project details</span>
