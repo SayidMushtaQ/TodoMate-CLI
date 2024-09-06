@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import style from "../styles/userInput.module.css";
 import { useMutation } from "@tanstack/react-query";
 import { createNewTodoHandler } from "../helpers/todoApi.helper";
+import { ErrorPopUP } from "../util/resPopUp";
 
 export default function UserInputBox() {
   const [newTodo, setNewTodo] = useState("");
@@ -11,7 +12,11 @@ export default function UserInputBox() {
   });
   const handleSave = (e:FormEvent) => {
     e.preventDefault()
-    mutate({title:newTodo})
+    if(newTodo){
+      mutate({title:newTodo})
+    }else{
+      ErrorPopUP("Oops! Please enter a task")
+    }
   };
   return (
     <div className={style.userInputBox}>
