@@ -13,7 +13,7 @@ export default function UserInputBox() {
   const handleSave = (e:FormEvent) => {
     e.preventDefault()
     if(newTodo){
-      mutate({title:newTodo})
+      mutate(newTodo)
     }else{
       ErrorPopUP("Oops! Please enter a task")
     }

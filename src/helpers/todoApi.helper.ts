@@ -1,5 +1,4 @@
 import axios from "axios";
-import type {NewTodoType} from '../types/todo'
 export const getAllTodosHandler = async()=>{
     try{
         const data = await axios.get('/api/todo/todos',{withCredentials:true})
@@ -10,12 +9,33 @@ export const getAllTodosHandler = async()=>{
     }
 }
 
-export const createNewTodoHandler = async(newTodo:NewTodoType)=>{
+export const createNewTodoHandler = async(newTodo:string)=>{
     try{
         const data = await axios.post('/api/todo/createTodo',newTodo);
         return data;
     }catch(err){
         console.log("ERROR: During Creating TODOS: ",err)
+        throw err;
+    }
+}
+
+export const createNewSubTodoHandler = async({newSubTodo,todoID}:{newSubTodo:string,todoID:string})=>{
+    try{
+        const data = await axios.post('/api/subTodo/createSubTodo',{content:newSubTodo,todoID});
+        return data;
+    }catch(err){
+        console.log("ERROR: During Creating TODOS: ",err)
+        throw err;
+    }
+}
+
+export const getAllSubTodosHandler = async(todoID:string)=>{
+    try{
+        const data = await axios.post('/api/subTodo/subTodos',{todoID});
+        console.log(todoID)
+        return data;
+    }catch(err){
+        console.log("ERROR: During Getting SUB TODOS: ",err)
         throw err;
     }
 }

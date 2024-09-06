@@ -1,36 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../styles/todos.module.css";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import clsx from "clsx";
 import { TodosRes } from "../types/todo";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import AddingSubTodo from "./AddingSubTodo.component";
+import { useMutation } from "@tanstack/react-query";
+import { getAllSubTodosHandler } from "../helpers/todoApi.helper";
 export default function Todo({ todo }: { todo: TodosRes }) {
   const [toggle, setToggle] = useState(false);
   const [addToglle,setAddToggle] = useState(false);
-  console.log(todo.subTodos);
+  const {mutate,data} = useMutation({ /*Better to use useQuery */
+    mutationFn:getAllSubTodosHandler,
+    onSuccess:(data)=>{
+      console.log(data)
+    }
+  })
+  console.log(todo._id)
+  useEffect(()=>{
+      const todoID = todo._id
+      mutate(todoID)
+  },[todo._id,mutate]);
   return (
     <div className={style.todo}>
       <span>{todo.title}</span>
       {todo.subTodos.length !== 0 ? (
         <>
           <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
-            <label>
-              <input type="checkbox" name="option1" value="Option 1" />
-              <span> Lorem, ipsum dolor. </span>
-            </label>
-            <label>
-              <input type="checkbox" name="option1" value="Option 1" />
-              <span> Lorem, ipsum dolor. </span>
-            </label>
-            <label>
-              <input type="checkbox" name="option1" value="Option 1" />
-              <span> Lorem, ipsum dolor. </span>
-            </label>
-            <label>
-              <input type="checkbox" name="option1" value="Option 1" />
-              <span> Lorem, ipsum dolor. </span>
-            </label>
             <label>
               <input type="checkbox" name="option1" value="Option 1" />
               <span> Lorem, ipsum dolor. </span>
@@ -59,7 +55,7 @@ export default function Todo({ todo }: { todo: TodosRes }) {
           </button>
         </div>
       )}
-      {addToglle && <AddingSubTodo setAddToggle={setAddToggle}/>}
+      {addToglle && <AddingSubTodo setAddToggle={setAddToggle} todoID={todo._id}/>}
     </div>
   );
 }
