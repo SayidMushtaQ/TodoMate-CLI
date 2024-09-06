@@ -10,13 +10,9 @@ import { getAllSubTodosHandler } from "../helpers/todoApi.helper";
 export default function Todo({ todo }: { todo: TodosRes }) {
   const [toggle, setToggle] = useState(false);
   const [addToglle,setAddToggle] = useState(false);
-  const {mutate,data} = useMutation({ /*Better to use useQuery */
-    mutationFn:getAllSubTodosHandler,
-    onSuccess:(data)=>{
-      console.log(data)
-    }
+  const {mutate,data:subTodos} = useMutation({ /*Better to use useQuery */
+    mutationFn:getAllSubTodosHandler
   })
-  console.log(todo._id)
   useEffect(()=>{
       const todoID = todo._id
       mutate(todoID)
@@ -24,7 +20,7 @@ export default function Todo({ todo }: { todo: TodosRes }) {
   return (
     <div className={style.todo}>
       <span>{todo.title}</span>
-      {todo.subTodos.length !== 0 ? (
+      {subTodos ? (
         <>
           <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
             <label>

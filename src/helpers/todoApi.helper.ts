@@ -33,7 +33,7 @@ export const getAllSubTodosHandler = async(todoID:string)=>{
     try{
         const data = await axios.post('/api/subTodo/subTodos',{todoID});
         console.log(todoID)
-        return data;
+        return data.data?.data?.subTodos;
     }catch(err){
         console.log("ERROR: During Getting SUB TODOS: ",err)
         throw err;
