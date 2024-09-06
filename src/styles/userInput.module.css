@@ -40,9 +40,25 @@
     border-radius: 5px;
     font-size: 1rem;
 }
-.userInputFormBox > form > button{
+.formButtons{
+    display: flex;
+    gap: 20px;
+}
+.formButtons button{
     align-self: self-start;
     padding: var(--button-padding);
     border-radius: 5px;
     cursor: pointer;
+}
+.formButtons button:nth-child(2){
+    background-color: #dc3545;
+}
+
+.subTodoContainer{
+    background-color: rgba(188, 188, 188, 0.736);
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

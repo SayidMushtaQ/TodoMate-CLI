@@ -3,13 +3,16 @@ import style from "../styles/todos.module.css";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import clsx from "clsx";
 import { TodosRes } from "../types/todo";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import AddingSubTodo from "./AddingSubTodo.component";
 export default function Todo({ todo }: { todo: TodosRes }) {
   const [toggle, setToggle] = useState(false);
+  const [addToglle,setAddToggle] = useState(false);
   console.log(todo.subTodos);
   return (
     <div className={style.todo}>
       <span>{todo.title}</span>
-      {todo.subTodos.length !== 0 && (
+      {todo.subTodos.length !== 0 ? (
         <>
           <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
             <label>
@@ -49,7 +52,14 @@ export default function Todo({ todo }: { todo: TodosRes }) {
             />
           </div>
         </>
+      ) : (
+        <div className={style.addingSubTodo}>
+          <button aria-label="Adding" title="Add sub Todos" onClick={()=>setAddToggle(true)}>
+            <IoMdAddCircleOutline size={23}/>
+          </button>
+        </div>
       )}
+      {addToglle && <AddingSubTodo setAddToggle={setAddToggle}/>}
     </div>
   );
 }

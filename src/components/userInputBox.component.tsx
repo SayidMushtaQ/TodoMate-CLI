@@ -37,7 +37,9 @@ export default function UserInputBox() {
               onChange={(e) => setNewTodo(e.target.value)}
               value={newTodo}
             />
-            <button type="submit">save</button>
+            <div className={style.formButtons}>
+              <button type="submit">save</button>
+            </div>
           </form>
         </div>
       </div>
