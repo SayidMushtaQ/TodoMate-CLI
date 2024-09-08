@@ -11,7 +11,7 @@ export const getAllTodosHandler = async()=>{
 
 export const createNewTodoHandler = async(newTodo:string)=>{
     try{
-        const data = await axios.post('/api/todo/createTodo',newTodo);
+        const data = await axios.post('/api/todo/createTodo',{title:newTodo});
         return data;
     }catch(err){
         console.log("ERROR: During Creating TODOS: ",err)
