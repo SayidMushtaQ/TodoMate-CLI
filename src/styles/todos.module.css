@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    max-height:20px;
+    max-height:0px;
     overflow: hidden;
     transition: max-height 0.5s;
     transition-timing-function: ease-in-out;
@@ -54,20 +54,18 @@
     left: 0;
     top: 70%;
     bottom: 0px;
-    cursor: pointer;
 }
 
 .bottomBlurAction{
     position: absolute;
     right: 10px;
     bottom: 10px;
-    filter: blur(0.8px);
     transition: transform 0.3s;
     cursor: pointer;
 }
 .blurActionToggle{
-    filter: blur(0px);
     transform: rotate(180deg);
+    filter: blur(0);
 }
 
 .addingSubTodo{
