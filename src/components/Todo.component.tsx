@@ -9,18 +9,18 @@ import { useMutation } from "@tanstack/react-query";
 import { getAllSubTodosHandler } from "../helpers/todoApi.helper";
 export default function Todo({ todo }: { todo: TodosRes }) {
   const [toggle, setToggle] = useState(false);
-  const [addToglle,setAddToggle] = useState(false);
-  const {mutate,data:subTodos} = useMutation({ /*Better to use useQuery */
-    mutationFn:getAllSubTodosHandler
-  })
-  useEffect(()=>{
-      const todoID = todo._id
-      mutate(todoID)
-  },[todo._id,mutate]);
+  const [addToglle, setAddToggle] = useState(false);
+  const { mutate, data: subTodos } = useMutation({
+    /*Better to use useQuery */ mutationFn: getAllSubTodosHandler,
+  });
+  useEffect(() => {
+    const todoID = todo._id;
+    mutate(todoID);
+  }, [todo._id, mutate]);
   return (
     <div className={style.todo}>
       <span>{todo.title}</span>
-      {subTodos ? (
+      {subTodos && (
         <>
           <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
             <label>
@@ -44,14 +44,19 @@ export default function Todo({ todo }: { todo: TodosRes }) {
             />
           </div>
         </>
-      ) : (
-        <div className={style.addingSubTodo}>
-          <button aria-label="Adding" title="Add sub Todos" onClick={()=>setAddToggle(true)}>
-            <IoMdAddCircleOutline size={23}/>
-          </button>
-        </div>
       )}
-      {addToglle && <AddingSubTodo setAddToggle={setAddToggle} todoID={todo._id}/>}
+      <div className={style.addingSubTodo}>
+        <button
+          aria-label="Adding"
+          title="Add sub Todos"
+          onClick={() => setAddToggle(true)}
+        >
+          <IoMdAddCircleOutline size={23} />
+        </button>
+      </div>
+      {addToglle && (
+        <AddingSubTodo setAddToggle={setAddToggle} todoID={todo._id} />
+      )}
     </div>
   );
 }

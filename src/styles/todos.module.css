@@ -73,9 +73,11 @@
 .addingSubTodo{
     position: absolute;
     top: 18px;
-    right: 13px;
+    right: 9px;
 }
 .addingSubTodo > button{
+    background-color: white;
+    color: black;
     padding: 3px;
     cursor: pointer;
     display: flex;
