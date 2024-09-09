@@ -15,7 +15,7 @@ export default function Todos() {
     <div className={style.todos}>
         <Todo/>
         <Todo/>
-        <Todo/>
+        <Todo/> 
         <Todo/>
         <Todo/>
         <Todo/>
