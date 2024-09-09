@@ -8,21 +8,21 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import AddingSubTodo from "./AddingSubTodo.component";
 import { useMutation } from "@tanstack/react-query";
 import { getAllSubTodosHandler } from "../helpers/todoApi.helper";
-export default function Todo({ todo }: { todo: TodosRes }) {
+export default function Todo() {
   const [toggle, setToggle] = useState(false);
   const [addToglle,setAddToggle] = useState(false);
   const {mutate,data:subTodos} = useMutation({ /*Better to use useQuery */
     mutationFn:getAllSubTodosHandler
   })
-  useEffect(()=>{
-      const todoID = todo._id
-      mutate(todoID)
-  },[todo._id,mutate]);
+  // useEffect(()=>{
+  //     const todoID = todo._id
+  //     mutate(todoID)
+  // },[todo._id,mutate]);
   return (
     <div className={style.todo}>
-      <span>{todo.title}</span>
-      {subTodos && subTodos.map((item:unknown,index:any)=>(
-        <div key={index}>
+      <span>Work & Life Balance Task</span>
+    
+        <div>
               <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
             <label>
               <input type="checkbox" name="option1" value="Option 1" />
@@ -45,7 +45,6 @@ export default function Todo({ todo }: { todo: TodosRes }) {
             />
           </div>
         </div>
-      ))}
     
         {toggle && 
         <div className={style.addingSubTodo}>
@@ -54,7 +53,7 @@ export default function Todo({ todo }: { todo: TodosRes }) {
           </button>
         </div>
         }
-      {addToglle && <AddingSubTodo setAddToggle={setAddToggle} todoID={todo._id}/>}
+      {addToglle && <AddingSubTodo />}
     </div>
   );
 }

@@ -13,9 +13,14 @@ export default function Todos() {
   console.log(todos)
   return (
     <div className={style.todos}>
-      {todos && todos.map((item)=>(
-        <Todo key={item._id} todo={item}/>
-      ))}
+        <Todo/>
+        <Todo/>
+        <Todo/>
+        <Todo/>
+        <Todo/>
+        <Todo/>
+        <Todo/>
+        <Todo/>
     </div>
   )
 }
