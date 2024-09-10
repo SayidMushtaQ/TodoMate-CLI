@@ -25,10 +25,13 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    max-height:20px;
+    max-height:25px;
     overflow: hidden;
     transition: max-height 0.5s;
     transition-timing-function: ease-in-out;
+}
+.subTodos > p{
+    color: var( --secondary-txt);
 }
 .openTodos{
     max-height: 280px;
@@ -87,5 +90,9 @@
 }
 
 .addingActionToggle{
+    visibility: visible;
+}
+
+.addSubTodoVisibility{
     visibility: visible;
 }

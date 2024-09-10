@@ -21,7 +21,7 @@ export const createNewTodoHandler = async(newTodo:string)=>{
 
 export const createNewSubTodoHandler = async({newSubTodo,todoID}:{newSubTodo:string,todoID:string})=>{
     try{
-        const data = await axios.post('/api/subTodo/createSubTodo',{content:newSubTodo,todoID});
+        const data = await axios.post('/api/subTodo/createSubTodo',{title:newSubTodo,todoID});
         return data;
     }catch(err){
         console.log("ERROR: During Creating TODOS: ",err)
@@ -31,8 +31,7 @@ export const createNewSubTodoHandler = async({newSubTodo,todoID}:{newSubTodo:str
 
 export const getAllSubTodosHandler = async(todoID:string)=>{
     try{
-        const data = await axios.post('/api/subTodo/subTodos',{todoID});
-        console.log(todoID)
+        const data = await axios.get(`/api/subTodo/${todoID}`);
         return data.data?.data?.subTodos;
     }catch(err){
         console.log("ERROR: During Getting SUB TODOS: ",err)

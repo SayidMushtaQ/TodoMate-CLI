@@ -3,7 +3,7 @@ import { useState, FormEvent } from "react";
 import { ErrorPopUP, SuccessPopUp } from "../util/resPopUp";
 import {useMutation} from '@tanstack/react-query'
 import { createNewSubTodoHandler } from "../helpers/todoApi.helper";
-export default function AddingSubTodo() {
+export default function AddingSubTodo({todoID}:{todoID:string}) {
   const [newSubTodo, setNewTodo] = useState("");
   const {mutate} = useMutation({
     mutationFn:createNewSubTodoHandler,
@@ -11,14 +11,14 @@ export default function AddingSubTodo() {
       SuccessPopUp("New Sub-todo Added Succesfully 🚀🚀")
     }
   })
-  // const handleSave = (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (newSubTodo) {
-  //       mutate({newSubTodo,todoID})
-  //   } else {
-  //     ErrorPopUP("Oops! Please enter a task");
-  //   }
-  // };
+  const handleSave = (e: FormEvent) => {
+    e.preventDefault();
+    if (newSubTodo) {
+        mutate({newSubTodo,todoID})
+    } else {
+      ErrorPopUP("Oops! Please enter a task");
+    }
+  };
   
   return (
     <div className={style.subTodoContainer}>
@@ -31,7 +31,7 @@ export default function AddingSubTodo() {
             </p>
           </section>
           <div className={style.userInputFormBox}>
-            <form>
+            <form onSubmit={handleSave}>
               <input
                 type="text"
                 name="todo"
@@ -42,7 +42,7 @@ export default function AddingSubTodo() {
               />
              <div className={style.formButtons}>
                 <button type="submit">save</button>
-                <button >Cancel</button>
+                <button>Cancel</button>
              </div>
             </form>
           </div>

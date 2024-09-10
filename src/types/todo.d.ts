@@ -1,7 +1,7 @@
 export interface NewTodoType {
     title:string
 }
-export interface TodosRes {
+export interface TodoType {
     _id:string
     createdAt:string
     createdBy:string

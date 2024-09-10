@@ -3,24 +3,24 @@ import style from '../styles/todos.module.css'
 import {useQuery} from '@tanstack/react-query'
 import { getAllTodosHandler } from '../helpers/todoApi.helper'
 
-import type { TodosRes } from '../types/todo'
-export default function Todos() {
-  const {data:todos,isLoading} = useQuery<TodosRes[]>({
+import type { TodoType } from '../types
+export default function Todos() {/todo'
+  const {data:todos,isLoading} = useQuery<TodoType[]>({
     queryKey:['todos'],
     queryFn:getAllTodosHandler,
   })
-  console.log(isLoading)
-  console.log(todos)
+
+  if(isLoading){
+    return(
+      <p>Loading...</p>
+    )
+  }
+
   return (
     <div className={style.todos}>
-        <Todo/>
-        <Todo/>
-        <Todo/> 
-        <Todo/>
-        <Todo/>
-        <Todo/>
-        <Todo/>
-        <Todo/>
+      {todos?.map((todo)=>(
+        <Todo key={todo._id} todo={todo}/>
+      ))}
     </div>
   )
 }

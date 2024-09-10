@@ -1,65 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import style from "../styles/todos.module.css";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import clsx from "clsx";
-import { TodosRes } from "../types/todo";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import AddingSubTodo from "./AddingSubTodo.component";
-import { useMutation } from "@tanstack/react-query";
+import {useQuery,UseQueryResult} from '@tanstack/react-query'
+import {TodoType} from '../types/todo'
 import { getAllSubTodosHandler } from "../helpers/todoApi.helper";
-export default function Todo() {
+export default function Todo({todo}:{todo:TodoType}) {
   const [toggle, setToggle] = useState(false);
   const [addToglle, setAddToggle] = useState(false);
-  const { mutate, data: subTodos } = useMutation({
-    /*Better to use useQuery */ mutationFn: getAllSubTodosHandler,
-  });
-  // useEffect(()=>{
-  //     const todoID = todo._id
-  //     mutate(todoID)
-  // },[todo._id,mutate]);
+  const {data:subTodo,isLoading}:UseQueryResult<TodoType[]> = useQuery({
+    queryKey:['subTodo',todo._id],
+    queryFn:() => getAllSubTodosHandler(todo._id)
+  })
+  if(isLoading){
+    return <p>Loading...</p>
+  }
   return (
     <div className={style.todo}>
-      <span>Work & Life Balance Task Lorem ipsum dolor sit amet.</span>
-
+      <span>{todo.title}</span>
       <div>
         <div className={clsx(style.subTodos, { [style.openTodos]: toggle })}>
-          <label>
-            <input type="checkbox" name="option1" value="Option 1" />
-            <span> Lorem, ipsum dolor. </span>
-          </label>
-          <label>
-            <input type="checkbox" name="option1" value="Option 1" />
-            <span> Lorem, ipsum dolor. </span>
-          </label>
-          <label>
-            <input type="checkbox" name="option1" value="Option 1" />
-            <span> Lorem, ipsum dolor. </span>
-          </label>
-          <label>
-            <input type="checkbox" name="option1" value="Option 1" />
-            <span> Lorem, ipsum dolor. </span>
-          </label>
-          
+          {subTodo?.map((todo)=>(
+            <label key={todo._id}>
+              <input type="checkbox" name="option1" value="Option 1" />
+              <span>{todo.title}</span>
+            </label>
+          ))}
+          {!subTodo?.length&& (
+            <p>You don&apos;t have any sub-todo</p>
+          )
+          }
         </div>
-        <div
-          className={clsx(style.todoBottomDefault, {
-            [style.todoBottomOnBlur]: !toggle,
-          })}
-        >
-          <FaCircleArrowDown
-            size={22}
-            color="4c4a4a"
-            onClick={() => setToggle(!toggle)}
-            className={clsx(style.bottomBlurAction, {
-              [style.blurActionToggle]: toggle,
+
+        {subTodo?.length && (
+          <div
+            className={clsx(style.todoBottomDefault, {
+              [style.todoBottomOnBlur]: !toggle,
             })}
-            aria-label="Card drop down"
-          />
-        </div>
+          >
+            <FaCircleArrowDown
+              size={22}
+              color="4c4a4a"
+              onClick={() => setToggle(!toggle)}
+              className={clsx(style.bottomBlurAction, {
+                [style.blurActionToggle]: toggle,
+              })}
+              aria-label="Card drop down"
+            />
+          </div>
+        )}
       </div>
 
-      <div className={clsx(style.addingSubTodo,{[style.addingActionToggle]:toggle})}>
+      <div className={clsx(style.addingSubTodo,{[style.addingActionToggle]:toggle,[style.addSubTodoVisibility]:!subTodo?.length})}>
         <button
           aria-label="Adding"
           title="Add sub Todos"
@@ -68,7 +63,7 @@ export default function Todo() {
           <IoMdAddCircleOutline size={25} />
         </button>
       </div>
-      {addToglle && <AddingSubTodo />}
+      {addToglle && <AddingSubTodo todoID={todo._id}/>}
     </div>
   );
 }
