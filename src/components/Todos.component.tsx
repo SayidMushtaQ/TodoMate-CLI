@@ -3,8 +3,8 @@ import style from '../styles/todos.module.css'
 import {useQuery} from '@tanstack/react-query'
 import { getAllTodosHandler } from '../helpers/todoApi.helper'
 
-import type { TodoType } from '../types
-export default function Todos() {/todo'
+import type { TodoType } from '../types/todo'
+export default function Todos() {
   const {data:todos,isLoading} = useQuery<TodoType[]>({
     queryKey:['todos'],
     queryFn:getAllTodosHandler,
