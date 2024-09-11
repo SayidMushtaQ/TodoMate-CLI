@@ -18,6 +18,7 @@ export default function Todo({todo}:{todo:TodoType}) {
   if(isLoading){
     return <p>Loading...</p>
   }
+  
   return (
     <div className={style.todo}>
       <span>{todo.title}</span>
