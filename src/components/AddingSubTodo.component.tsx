@@ -1,14 +1,16 @@
 import style from "../styles/userInput.module.css";
 import { useState, FormEvent } from "react";
 import { ErrorPopUP, SuccessPopUp } from "../util/resPopUp";
-import {useMutation} from '@tanstack/react-query'
+import {useMutation, useQueryClient} from '@tanstack/react-query'
 import { createNewSubTodoHandler } from "../helpers/todoApi.helper";
-export default function AddingSubTodo({todoID}:{todoID:string}) {
+export default function AddingSubTodo({todoID,setAddToggle}:{todoID:string; setAddToggle: React.Dispatch<React.SetStateAction<boolean>>}) {
   const [newSubTodo, setNewTodo] = useState("");
+  const queryClient = useQueryClient();
   const {mutate} = useMutation({
     mutationFn:createNewSubTodoHandler,
     onSuccess:()=>{
-      SuccessPopUp("New Sub-todo Added Succesfully 🚀🚀")
+      SuccessPopUp("New Sub-todo Added Succesfully 🚀🚀");
+      queryClient.invalidateQueries({queryKey:['subTodo']});
     }
   })
   const handleSave = (e: FormEvent) => {
@@ -42,7 +44,7 @@ export default function AddingSubTodo({todoID}:{todoID:string}) {
               />
              <div className={style.formButtons}>
                 <button type="submit">save</button>
-                <button>Cancel</button>
+                <button onClick={()=>setAddToggle(false)}>Cancel</button>
              </div>
             </form>
           </div>

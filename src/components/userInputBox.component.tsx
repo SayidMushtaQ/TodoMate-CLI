@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import style from "../styles/userInput.module.css";
 import { useMutation,useQueryClient } from "@tanstack/react-query";
 import { createNewTodoHandler } from "../helpers/todoApi.helper";
-import { ErrorPopUP } from "../util/resPopUp";
+import { ErrorPopUP, SuccessPopUp } from "../util/resPopUp";
 
 export default function UserInputBox() {
   const [newTodo, setNewTodo] = useState("");
@@ -11,6 +11,7 @@ export default function UserInputBox() {
     mutationKey: ["addNewTodo"],
     mutationFn: createNewTodoHandler,
     onSuccess:()=>{
+      SuccessPopUp("New TODO Created..!!🎉🎉")
       queryClient.invalidateQueries({queryKey:['todos']});
     }
   });

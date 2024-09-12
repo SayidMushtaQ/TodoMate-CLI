@@ -64,7 +64,7 @@ export default function Todo({todo}:{todo:TodoType}) {
           <IoMdAddCircleOutline size={25} />
         </button>
       </div>
-      {addToglle && <AddingSubTodo todoID={todo._id}/>}
+      {addToglle && <AddingSubTodo todoID={todo._id} setAddToggle={setAddToggle}/>}
     </div>
   );
 }
